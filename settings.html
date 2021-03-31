@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Settings</title>
+	<style type="text/css">
+	html,body
+	{
+		padding: 0;
+		marging: 0;
+		color: white;
+		background: black;
+		text-align: center;
+		font-family: monospace;
+	}
+	h1
+	{
+		margin: 100px 0 30px 0;
+	}
+	.flex
+	{
+		display: flex;
+		text-align: left;
+		justify-content: center;
+	}
+	.flex > div:first-of-type
+	{
+		font-size: 15px;
+		min-width: 65px;
+	}
+	.flex > div:first-of-type > div
+	{
+		padding-top: 6px;
+	}
+	.flex > div:last-of-type > div
+	{
+		padding-top: 3px;
+	}
+	.flex > div:last-of-type
+	{
+		min-width: 250px;
+	}
+	.switchide
+	{
+		user-select: none;
+		margin-left: 5px;
+		cursor: pointer;
+	}
+	button
+	{
+		min-width: 60px;
+		margin-top: 50px;
+	}
+	</style>
+</head>
+<body>
+	<h1>Settings</h1>
+	<form>
+		<div class="flex">
+			<div>
+				<div>Token</div>
+				<div>Server</div>
+			</div>
+			<div>
+				<div><input type="password" name="token" placeholder="token"><span class="switchide">👀</span></div>
+				<div><input name="server" placeholder="server"></div>
+			</div>
+		</div>
+		<button>Save</button>
+	</form>
+	<script src="settings.js"></script>
+</body>
+</html>

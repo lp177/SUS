@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "Simple Url Switcher",
+  "version": "2.0",
+  "description": "Switch url fluidly (for example youtube/soundcloud in keeping the progression) from your current device to another",
+  "options_page": "settings.html",
+  "permissions": [
+    "activeTab","contextMenus","storage"
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "URLSwitcher"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
