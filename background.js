@@ -23,7 +23,7 @@ function postNewURL(url,token,server)
 	if (token===undefined||token.length<1||server===undefined||server.length<1)
 		return browser.runtime.openOptionsPage();
 	var http = new XMLHttpRequest();
-	http.open('POST', server, true);
+	http.open('POST', server+'/swap.php', true);
 	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	http.onreadystatechange = function()
 	{

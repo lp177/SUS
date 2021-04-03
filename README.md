@@ -5,7 +5,7 @@ One left click to the extension icon save the current page to the selected serve
 
 You can now open it by visiting the swap.html file of your server on all other device who you don't have / can't install browser extension  (quick tip: you have mobile browser like Kiwi for install browser extension in android) or rigth click on the extension button and select open here.
 
-You can build your own server in folowing this basic exemple (need to edit $myToken with your random token put in extension settings) for [serverurl]/swap.php containing:
+You can build your own server in folowing this basic exemple (need to replace MY_TOKEN_KEY_HERE with your random selected token put in extension settings) for [server]/swap.php containing:
 
  ```php
 <?php
@@ -20,3 +20,10 @@ if (isset($_POST['auth_key'],$_POST['data']) && $_POST['auth_key'] === $myToken)
 else
 	header('Location: swap.txt');
 ```
+
+Curently managed for keep media time (on other website we just save the current url):
+
+https://soundcloud.com
+https://www.twitch.tv
+https://youtube.com
+https://www.franceinter.fr
