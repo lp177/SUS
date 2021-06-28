@@ -1,5 +1,5 @@
 'use strict';
-
+var verbose=false,debugIsFun=console.info;
 function purposeUrl(url)
 {
 	return true;
@@ -10,22 +10,29 @@ function extractTwitchWithCurrentTime()
 {
 	const shareButton=document.querySelector('.channel-info-content button');
 	if(shareButton)
-	{ // Probably on video page
-		const timestampToggler=document.querySelector('#video-share-timestamp-toggle');
+	{
+		if(verbose===true)
+			debugIsFun('Probably on video page')
 		if (!document.querySelector('input[data-a-target="tw-input"][readonly]'))
 			shareButton.click();
+		const timestampToggler=document.querySelector('#video-share-timestamp-toggle');
 		if(timestampToggler&&timestampToggler.checked!==true)
 			timestampToggler.click();
 		return document.querySelector('input[data-a-target="tw-input"][readonly]').value;
 	}
-	// Probably on streameur homepage
-	document.querySelector('.home a.tw-link')
+	if(verbose===true)
+		debugIsFun('Probably on streamer homepage')
+	document.querySelector('.home a.tw-link');
 	var ct = document.querySelector('p[data-a-target="player-seekbar-current-time"]'),
-		urlGenerated = document.querySelector('.home a.tw-link')&&document.querySelector('.home a.tw-link').href,
-		tc = '';
+	urlGenerated = document.querySelector('.home a.tw-link')&&document.querySelector('.home a.tw-link').href,
+	tc = '';
 
 	if (!ct || !urlGenerated)
+	{
+		if(verbose===true)
+			debugIsFun('!ct || !urlGenerated')
 		return;
+	}
 
 	ct = ct.innerText.split(':');
 
