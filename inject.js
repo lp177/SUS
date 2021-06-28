@@ -8,13 +8,13 @@ function purposeUrl(url)
 
 function extractTwitchWithCurrentTime()
 {
-	const timestampToggler=document.querySelector('#video-share-timestamp-toggle'),
-		  shareButton=document.querySelector('.channel-info-content button');
-	if(timestampToggler&&shareButton)
+	const shareButton=document.querySelector('.channel-info-content button');
+	if(shareButton)
 	{ // Probably on video page
+		const timestampToggler=document.querySelector('#video-share-timestamp-toggle');
 		if (!document.querySelector('input[data-a-target="tw-input"][readonly]'))
 			shareButton.click();
-		if(timestampToggler.checked!==true)
+		if(timestampToggler&&timestampToggler.checked!==true)
 			timestampToggler.click();
 		return document.querySelector('input[data-a-target="tw-input"][readonly]').value;
 	}
