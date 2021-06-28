@@ -1,16 +1,27 @@
 'use strict';
 
-const confirmBeforeSave177 = false;
-
 function purposeUrl(url)
 {
-	return (confirmBeforeSave177)?confirm( 'Do you want switch url:\n' + url ):true;
+	return true;
+	// return confirm( 'Do you want switch url:\n' + url );
 }
 
 function extractTwitchWithCurrentTime()
 {
+	const timestampToggler=document.querySelector('#video-share-timestamp-toggle'),
+		  shareButton=document.querySelector('.channel-info-content button');
+	if(timestampToggler&&shareButton)
+	{ // Probably on video page
+		if (!document.querySelector('input[data-a-target="tw-input"][readonly]'))
+			shareButton.click();
+		if(timestampToggler.checked!==true)
+			timestampToggler.click();
+		return document.querySelector('input[data-a-target="tw-input"][readonly]').value;
+	}
+	// Probably on streameur homepage
+	document.querySelector('.home a.tw-link')
 	var ct = document.querySelector('p[data-a-target="player-seekbar-current-time"]'),
-		urlGenerated = document.querySelector('meta[property="og:url"]') && document.querySelector('meta[property="og:url"]').content.split('?')[0],
+		urlGenerated = document.querySelector('.home a.tw-link')&&document.querySelector('.home a.tw-link').href,
 		tc = '';
 
 	if (!ct || !urlGenerated)
@@ -109,7 +120,7 @@ function extractURL()
 }
 if (window.urlSwapperInjected !== true)
 {
-	window.urlSwapperInjected = true
+	window.urlSwapperInjected = true;
 	chrome.runtime.onMessage.addListener(function(msg)
 	{
 		if (msg.action === "extractURL")
