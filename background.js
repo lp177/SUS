@@ -62,7 +62,7 @@ browser.contextMenus.create({
 			(data)=>{
 				if (data['server']===undefined||data['server'].length<1)
 					return browser.runtime.openOptionsPage();
-				browser.tabs.create({url:data['server']+'/swap.html'});
+				browser.tabs.create({url:data['server']+'/swap.html?d='+Date.now()});
 			}
 		);
 	}
