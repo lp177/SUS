@@ -13,15 +13,23 @@ function extractTwitchWithCurrentTime()
 	{
 		if(verbose===true)
 			debugIsFun('Probably on video page')
-		const tw=document.querySelector('input[data-a-target="tw-input"][readonly]');
-		if (!tw)
+		var tw=document.querySelector('input[data-a-target="tw-input"][readonly]');
+		if(!tw)
 			shareButton.click();
 		const timestampToggler=document.querySelector('#video-share-timestamp-toggle');
+		if(!timestampToggler)
+			console.warn('timestampToggler not found');
 		if(timestampToggler&&timestampToggler.checked!==true)
 			timestampToggler.click();
-		if (tw)
+		if(!tw)
+			tw=document.querySelector('input[data-a-target="tw-input"][readonly]');
+		if(tw)
 			return document.querySelector('input[data-a-target="tw-input"][readonly]').value;
+		else
+			console.warn('No tw input');
 	}
+	else
+		console.warn('Share button not found');
 	if(verbose===true)
 		debugIsFun('Probably on streamer homepage')
 	document.querySelector('.home a.tw-link');
@@ -69,9 +77,10 @@ function extractYoutubeWithCurrentTime()
 {
 	var s = document.createElement('script');
 	s.id = 'script177';
-	s.innerText = "(function(){const getVideoUrl177 = (document.getElementById('movie_player')) ? document.getElementById('movie_player').getVideoUrl() : null;document.body.setAttribute( 'getvideourl177', getVideoUrl177 )})()";
+	s.src = chrome.runtime.getURL('integrations/youtube.js');
+	s.onload = function(){this.remove()};
 	(document.head||document.documentElement).appendChild(s);
-	const video_url = document.body.getAttribute( 'getvideourl177' );
+	const video_url = document.body.getAttribute('getvideourl177');
 	return (video_url==='null'||video_url==='https://www.youtube.com/watch')?window.location.href:video_url;
 }
 
@@ -92,16 +101,16 @@ function extractGenericAudioWithCurrentTime(timelineSelector,timelineElementToSe
 
 function extractURL()
 {
-	var generatedUrl = null;
+	var url = null;
 
 	if (window.location.href.startsWith('https://soundcloud.com/'))
-		generatedUrl = extractSoundcloudWithCurrentTime();
+		url = extractSoundcloudWithCurrentTime();
 	else if (window.location.href.startsWith('https://www.twitch.tv/'))
-		generatedUrl = extractTwitchWithCurrentTime();
+		url = extractTwitchWithCurrentTime();
 	else if (window.location.href.startsWith('https://youtube.com/') || window.location.href.startsWith('https://www.youtube.com/') || window.location.href.startsWith('https://m.youtube.com/'))
-		generatedUrl = extractYoutubeWithCurrentTime();
-	else if (window.location.href.startsWith('https://www.franceinter.fr/'))
-		generatedUrl = extractGenericAudioWithCurrentTime('.time-informations', (timelineElement)=>{
+		url = extractYoutubeWithCurrentTime();
+	else if (window.location.href.startsWith('https://www.radiofrance.fr/'))
+		url = extractGenericAudioWithCurrentTime('div[data-zone="COMPONENT_TIME_START"]', (timelineElement)=>{
 			const times = timelineElement.innerText.split(' ')[0].split(':');
 			if (times.length>2)
 				return (parseInt(times[0])*60*60)+(parseInt(times[1])*60)+parseInt(times[2]);
@@ -110,22 +119,18 @@ function extractURL()
 			return parseInt(times[0]);
 
 		});
-
-	if (!generatedUrl)
+	saveUrl(url);
+}
+function saveUrl(url)
+{
+	if (!url)
 	{
 		if (purposeUrl(window.location.href))
-			generatedUrl = window.location.href;
+			url = window.location.href;
 		else
 			return;
 	}
-
-	chrome.runtime.sendMessage(
-		{action: 'extractedURL', generatedUrl: generatedUrl},
-		function(response)
-		{
-			console.info('Extension response: ', response.reply);
-		}
-	)
+	chrome.runtime.sendMessage({action: 'extractedURL', url: url})
 }
 if (window.urlSwapperInjected !== true)
 {

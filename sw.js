@@ -40,7 +40,7 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse)
 	if (request.action==='extractedURL')
 		browser.storage.sync.get(
 			['token','server'],
-			(data)=>postNewURL(request.generatedUrl,data['token'],data['server'])
+			(data)=>postNewURL(request.url,data['token'],data['server'])
 		);
 	else if (request.query==='setToken')
 		browser.storage.sync.set({'token':request.value});
