@@ -36,7 +36,7 @@ else
 
 Curently managed for keep media time (on other website we just save the current url):
 
-https://soundcloud.com
-https://www.twitch.tv
-https://youtube.com
-https://www.franceinter.fr
+https://soundcloud.com  
+https://www.twitch.tv  
+https://youtube.com  
+https://www.franceinter.fr  
