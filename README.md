@@ -13,7 +13,20 @@ $myToken = 'MY_TOKEN_KEY_HERE';
 if (isset($_POST['auth_key'],$_POST['data']) && $_POST['auth_key'] === $myToken)
 {
 	file_put_contents('swap.txt', $_POST['data'], LOCK_EX);
-	file_put_contents('swap.html', '<html><head><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"></head><body><script>window.location = "'.$_POST['data'].'";</script><body></html>', LOCK_EX);
+	file_put_contents(
+		'swap.html',
+		'<html>'
+			.'<head>'
+				.'<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">'
+				.'<meta http-equiv="Pragma" content="no-cache">'
+				.'<meta http-equiv="Expires" content="0">'
+			.'</head>'
+			.'<body>'
+				.'<script>window.location = "'.str_replace('"', '\"', $_POST['data']).'";</script>'
+			.'</body>'
+		.'</html>',
+		LOCK_EX
+	);
 	header('Access-Control-Allow-Origin: *');
 	echo 'ok';
 }
