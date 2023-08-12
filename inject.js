@@ -69,7 +69,7 @@ function extractYoutubeWithCurrentTime()
 {
 	var s = document.createElement('script');
 	s.id = 'script177';
-	s.innerText = "const getVideoUrl177 = (document.getElementById('movie_player')) ? document.getElementById('movie_player').getVideoUrl() : null;document.body.setAttribute( 'getvideourl177', getVideoUrl177 )";
+	s.innerText = "(function(){const getVideoUrl177 = (document.getElementById('movie_player')) ? document.getElementById('movie_player').getVideoUrl() : null;document.body.setAttribute( 'getvideourl177', getVideoUrl177 )})()";
 	(document.head||document.documentElement).appendChild(s);
 	const video_url = document.body.getAttribute( 'getvideourl177' );
 	return (video_url==='null'||video_url==='https://www.youtube.com/watch')?window.location.href:video_url;
