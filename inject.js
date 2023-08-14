@@ -78,10 +78,14 @@ function extractYoutubeWithCurrentTime()
 	var s = document.createElement('script');
 	s.id = 'script177';
 	s.src = chrome.runtime.getURL('integrations/youtube.js');
-	s.onload = function(){this.remove()};
+	s.onload = function(){
+		this.remove();
+		setTimeout(()=>{
+			const video_url = document.body.getAttribute('getvideourl177');
+			saveUrl((video_url==='null'||video_url==='https://www.youtube.com/watch')?window.location.href:video_url);
+		},30);
+	};
 	(document.head||document.documentElement).appendChild(s);
-	const video_url = document.body.getAttribute('getvideourl177');
-	return (video_url==='null'||video_url==='https://www.youtube.com/watch')?window.location.href:video_url;
 }
 
 function extractGenericAudioWithCurrentTime(timelineSelector,timelineElementToSeconds=(element)=>parseFloat(element.value)*60)
@@ -108,7 +112,7 @@ function extractURL()
 	else if (window.location.href.startsWith('https://www.twitch.tv/'))
 		url = extractTwitchWithCurrentTime();
 	else if (window.location.href.startsWith('https://youtube.com/') || window.location.href.startsWith('https://www.youtube.com/') || window.location.href.startsWith('https://m.youtube.com/'))
-		url = extractYoutubeWithCurrentTime();
+		return extractYoutubeWithCurrentTime();
 	else if (window.location.href.startsWith('https://www.radiofrance.fr/'))
 		url = extractGenericAudioWithCurrentTime('div[data-zone="COMPONENT_TIME_START"]', (timelineElement)=>{
 			const times = timelineElement.innerText.split(' ')[0].split(':');
