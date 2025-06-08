@@ -25,11 +25,5 @@
             "resources": ["integrations/*.js"],
             "matches": ["<all_urls>"]
         }
-    ],
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "simple_url_switcher@lp177.fr",
-            "strict_min_version": "109.0"
-        }
-    }
+    ]
 }

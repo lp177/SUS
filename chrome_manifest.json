@@ -5,31 +5,19 @@
     "description": "Switch url fluidly (for example youtube/soundcloud in keeping the progression) from your current device to another",
     "options_page": "settings.html",
     "permissions": ["activeTab", "contextMenus", "storage", "scripting"],
+    "action": {},
     "background": {
-        "scripts": ["sw.js"]
+        "service_worker": "sw.js"
     },
     "icons": {
         "16": "icon16.png",
         "48": "icon48.png",
         "128": "icon128.png"
     },
-    "action": {
-        "default_icon": {
-            "16": "icon16.png",
-            "48": "icon48.png",
-            "128": "icon128.png"
-        }
-    },
     "web_accessible_resources": [
         {
-            "resources": ["integrations/*.js"],
-            "matches": ["<all_urls>"]
+            "resources": ["integrations/youtube.js"],
+            "matches": ["https://www.youtube.com/*"]
         }
-    ],
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "simple_url_switcher@lp177.fr",
-            "strict_min_version": "109.0"
-        }
-    }
+    ]
 }
